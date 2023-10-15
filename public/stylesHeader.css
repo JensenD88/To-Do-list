@@ -1,0 +1,10 @@
+*{
+    margin:0px;
+}
+header{
+    display: flex;
+    height: 5rem;
+    align-items: center;
+    justify-content: start;
+    gap:3rem;
+}
