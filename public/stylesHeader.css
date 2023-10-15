@@ -3,8 +3,35 @@
 }
 header{
     display: flex;
-    height: 5rem;
+    height: 3rem;
     align-items: center;
-    justify-content: start;
-    gap:3rem;
+    justify-content: space-between;
+    background-color:dodgerblue;
+
+}
+h2{
+    margin-left:20px;
+    color:aliceblue;
+}
+nav{
+    display: flex;
+    flex-basis: 100%;
+    justify-content: end;
+    align-content: center;
+    gap: 2rem;
+    padding-right: 80px;
+}
+
+nav > a{
+    font-size: large;
+    text-decoration: none;
+    color:aliceblue;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+}
+
+nav > a:hover{
+    background-color:aliceblue ;
+    color:dodgerblue;
+   
 }

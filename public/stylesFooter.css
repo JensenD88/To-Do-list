@@ -1,0 +1,9 @@
+.container1 {
+    width: 100%;
+    color: aliceblue;
+    background-color: dodgerblue;
+    position: absolute;
+    text-align: center;
+    font-size: 1rem;
+    bottom: 0px;
+}
