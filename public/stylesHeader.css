@@ -6,10 +6,11 @@ header{
     height: 3rem;
     align-items: center;
     justify-content: space-between;
-    background-color:dodgerblue;
+    background-color:#ffa729;
 
 }
-h2{
+header>p{
+    font-size:2rem;
     margin-left:20px;
     color:aliceblue;
 }
@@ -32,6 +33,6 @@ nav > a{
 
 nav > a:hover{
     background-color:aliceblue ;
-    color:dodgerblue;
+    color:#0b2d44;
    
 }
