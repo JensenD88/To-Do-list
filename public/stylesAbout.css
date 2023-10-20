@@ -1,0 +1,16 @@
+img{
+    height: 200px;
+    width: 200px;
+    display: block;
+    margin-left: 450px;
+    margin-top: 20px;
+    border-radius: 100px;
+}
+p{
+    width: 50%;
+    margin-top:10px;
+    margin-left: 275px;
+    font-size: 1.2rem;
+    text-wrap: wrap;
+    text-align: center;
+}
