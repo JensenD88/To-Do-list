@@ -18,8 +18,15 @@ const userList = new mongoose.Schema({
 	},
 	role: String
 })
+
+const taskItem = new mongoose.Schema({
+	task: String
+})
+
 //creating a model
+
 const User = new mongoose.model("users", userList);
+const task = new mongoose.model("ScrumAssigned", taskItem);
 
 const app = express();
 
@@ -76,7 +83,7 @@ app.post("/login", (req, res) => {
 
 	User.findOne({ email: mailEntered })
 		.then((data) => {
-
+			
 			if (data) {
 				//checking password 
 				console.log("user exists")
@@ -89,6 +96,19 @@ app.post("/login", (req, res) => {
 		)
 })
 
+app.post("/ToDo",(req,res) =>{
+	//console.log(req.body.tasks);
+	const taskString = req.body.tasks;
+	var newTask = new task({
+		task: taskString
+	})
+
+	newTask
+		.save()
+		.then(()=>{
+			console.log("the task was saved in the data base");
+		})
+})
 
 app.listen(3000, () => {
 	console.log("the server is running on port 3000");

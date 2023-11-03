@@ -1,0 +1,35 @@
+*{
+    margin: 0px
+}
+
+.container2{
+    height: 350px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-left: 25rem;
+    margin-top: 4rem;
+    align-items: center;
+    justify-content:space-around;
+
+    border-radius: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+
+.container2> h1{
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 1rem;;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap:0.5rem;
+}
+
+.container>p{
+    padding-bottom: 5px;
+}

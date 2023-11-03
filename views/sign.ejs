@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesLog.css">
     <title>Document</title>
 </head>
 <body>
     <%- include("partials/header.ejs") %> 
-
+<div class="container2">
     <h1>Register</h1>
-    <div>
+    
         <form method="post" action="/signUp">
             <label >Email</label>
             <input type="text"  name="Email" required>
             <label >Password</label>
             <input type="text" name="Password" required>
             <label >Role</label>
-            <input type="text"name="role" required>
+            <input id="txt" list="UserType">
+                <datalist id="UserType">
+                    <option value="manager">manager</option>
+                    <option value="user">user</option>
+                </datalist>
             <input type="submit" value="submit">
         </form>
-        
     </div>
-
+    <script>
+        document.getElementById('txt').addEventListener('keypress', (e)=>{
+            e.preventDefault();
+        })
+    </script>
     <%- include("partials/footer.ejs") %> 
 </body>
 </html>

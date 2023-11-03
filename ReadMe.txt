@@ -1,4 +1,5 @@
 1. change the wall paper with basic wallpaper.
+2. check and change ccs class names (need to be unique).
 _________________________
 
 Features.

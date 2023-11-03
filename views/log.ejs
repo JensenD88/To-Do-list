@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesLog.css">
     <title>Document</title>
 </head>
 <body>
     <%- include("partials/header.ejs") %> 
-
+<div class="container2">
     <h1>Login</h1>
-    <div>
+    
     <form method="post" action="/login"> 
         <label >Email</label>
         <input type="text"  name ="mail" required>
@@ -19,8 +20,9 @@
         
     </form>
        <p>Don't have an account <a href="/signUp">Sign up</a></p>
-    </div>
-
+    
+</div>
+    
     <%- include("partials/footer.ejs") %> 
 </body>
 </html>
