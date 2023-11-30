@@ -1,6 +1,22 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import session from "express-session";
+import passport from "passport";
+import passportLocalMongoose from "passport-local-mongoose";
+
+const port = 3000;
+const app = express();
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+	secret: 'im Darren IN India',
+	resave: false,
+	saveUninitialized: false,
+  }))
+  app.use(passport.initialize());
+  app.use(passport.session());
 
 //connecting to mondodb named UserList using mongose ODM
 mongoose.connect("mongodb://localhost:27017/UserList", {
@@ -8,108 +24,98 @@ mongoose.connect("mongodb://localhost:27017/UserList", {
 	useUnifiedTopology: true
 });
 
+
 const userList = new mongoose.Schema({
-	email: {
-		type: String,
-		required: true,
-	},
-	Password: {
-		type: String, required: true
-	},
-	role: String
+	email: {type: String},
+	Password:{type: String},
+	role: {type:String},
+	tasks:[{type:String}]
 })
 
-const taskItem = new mongoose.Schema({
-	task: String
-})
+userList.plugin(passportLocalMongoose);
 
 //creating a model
 
 const User = new mongoose.model("users", userList);
-const task = new mongoose.model("ScrumAssigned", taskItem);
 
-const app = express();
+passport.use(User.createStrategy());
 
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", (req, res) => {
 	res.render("index.ejs");
 })
 
-
-
 app.get("/about", (req, res) => {
 	res.render("about.ejs");
 })
 
+app.get("/ToDo" , (req,res) =>{
+	if(req.isAuthenticated()){
+		res.render("ToDo.ejs");
+	}else{
+		res.redirect("/Login");
+	}
+})
+
+app.get('/logout', function(req, res, next){
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.redirect('/');
+    });
+  });
+
+app.get("/login", (req, res) => {
+	res.render("log.ejs")
+})
+
+app.post("/login", (req,res)=>{
+	const user = new User({
+		username: req.body.username,
+		password: req.body.password
+	})
+
+	req.login(user, function(err){
+		if(err){
+			console.log("login error");
+		} else {
+			console.log("sucessfully logged in")
+			passport.authenticate("local")(req, res, function(){
+				res.redirect("/Todo");
+		})
+			}
+	})
+
+})
 
 app.get("/signUp", (req, res) => {
 	res.render("sign.ejs");
 })
 
 app.post("/signUp", (req, res) => {
-
-	const mailId = req.body.Email;
-	const passw = req.body.Password;
-	const Rl = req.body.role;
-
-	var newUser = new User({
-		email: mailId,
-		Password: passw,
-		role: Rl
+ const newUser = new User ({
+	username : req.body.username,
+    passWord : req.body.password,
+	role : req.body.role
 	})
 
-	newUser
-		.save()
-		.then(() => {
-			console.log(newUser);
-			console.log("saved User successfully")
-			res.render("ToDo.ejs");
-		})
-		.catch((err) => {
-			console.log(err)
-		})
-  User.close;
-})
-
-app.get("/login", (req, res) => {
-	res.render("log.ejs")
-})
-
-app.post("/login", (req, res) => {
-	var mailEntered = req.body.mail;
-	var passwordEntered = req.body.password;
-
-	User.findOne({ email: mailEntered })
-		.then((data) => {
-			
-			if (data) {
-				//checking password 
-				console.log("user exists")
-				if (data.Password === passwordEntered) {
-					res.render("ToDo.ejs");
-					console.log("login successfull")
-				}else{res.send("incorrect password")}
-			}else{res.send("USER not found")}
+	User.register(newUser, req.body.password, function(err,user){
+		if(err){
+			console.log(err);
+			res.redirect("/signUp");
+		}else{
+			console.log("console: no errors in registering");
+			passport.authenticate("local")(req, res, function(){
+				res.redirect("/Todo");
+			});
 		}
-		)
-})
 
-app.post("/ToDo",(req,res) =>{
-	//console.log(req.body.tasks);
-	const taskString = req.body.tasks;
-	var newTask = new task({
-		task: taskString
-	})
+	});
+});
 
-	newTask
-		.save()
-		.then(()=>{
-			console.log("the task was saved in the data base");
-		})
-})
 
-app.listen(3000, () => {
-	console.log("the server is running on port 3000");
+
+app.listen(port, () => {
+	console.log(`the server is running on port ${port}` );
 })

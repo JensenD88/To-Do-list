@@ -13,23 +13,19 @@
     
         <form method="post" action="/signUp">
             <label >Email</label>
-            <input type="text"  name="Email" required>
+            <input type="text"  name="username" required>
             <label >Password</label>
-            <input type="text" name="Password" required>
-            <label >Role</label>
-            <input id="txt" list="UserType">
-                <datalist id="UserType">
-                    <option value="manager">manager</option>
-                    <option value="user">user</option>
-                </datalist>
+            <input type="text" name="password" required>
+            <label >Please choose your Role</label>
+            
+                <select name ="role" id="userType">
+                    <option value="manager">Manager</option>
+                    <option value="user">User</option>
+                </select>
             <input type="submit" value="submit">
         </form>
     </div>
-    <script>
-        document.getElementById('txt').addEventListener('keypress', (e)=>{
-            e.preventDefault();
-        })
-    </script>
+    
     <%- include("partials/footer.ejs") %> 
 </body>
 </html>

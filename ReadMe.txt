@@ -1,6 +1,10 @@
 1. change the wall paper with basic wallpaper.
 2. check and change ccs class names (need to be unique).
+3. mongoose-encrytion npm to encrypt password feild in the dataBase
+4. Dotenv to make sure SECRETS or APIkeys are not public.
+
 _________________________
+
 
 Features.
 product name : TaskMinder (Agile task management software).

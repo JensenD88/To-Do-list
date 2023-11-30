@@ -7,15 +7,14 @@
 </head>
 <body>
     <%- include("partials/header.ejs") %> 
-
-    <h1>Application Dash Board</h1>
-    <h2>User</h2>
-    <br>
-    <form action="/ToDO" method="post">
-    <input type="text" name = "tasks">
-    <input type="submit" value= "+">
+    <h1> manager dash board</h1>
     </form>
-    
+    <form action="/manager" method="post">
+
+        <input type="text" name = "tasks">
+        <input type="submit" value= "+">
+        
+    </form>
     <%- include("partials/footer.ejs") %> 
 </body>
 </html>
