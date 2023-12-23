@@ -1,9 +1,11 @@
-import express from "express";
+import express, { json, query } from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
 import passportLocalMongoose from "passport-local-mongoose";
+
+
 
 const port = 3000;
 const app = express();
@@ -17,6 +19,7 @@ app.use(session({
   }))
   app.use(passport.initialize());
   app.use(passport.session());
+app.use(bodyParser.json());
 
 //connecting to mondodb named UserList using mongose ODM
 mongoose.connect("mongodb://localhost:27017/UserList", {
@@ -26,10 +29,11 @@ mongoose.connect("mongodb://localhost:27017/UserList", {
 
 
 const userList = new mongoose.Schema({
-	email: {type: String},
+	username: {type: String},
+	logName: {type: String},
 	Password:{type: String},
-	role: {type:String},
-	tasks:[{type:String}]
+	role: {type: String},
+	taskS:{type:String}
 })
 
 userList.plugin(passportLocalMongoose);
@@ -37,11 +41,13 @@ userList.plugin(passportLocalMongoose);
 //creating a model
 
 const User = new mongoose.model("users", userList);
+const tasks = new mongoose.model("tasks", userList);
 
 passport.use(User.createStrategy());
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 
 app.get("/", (req, res) => {
 	res.render("index.ejs");
@@ -51,12 +57,61 @@ app.get("/about", (req, res) => {
 	res.render("about.ejs");
 })
 
-app.get("/ToDo" , (req,res) =>{
+app.get("/Todo" , (req , res) =>{
+	const myString = req.query.name;
+	const newStr = myString.slice(1, -1);
+	req.session.name = newStr;
+
+	console.log(newStr);
+	// let newstr= req.locals.newStr;
 	if(req.isAuthenticated()){
-		res.render("ToDo.ejs");
+		 const task = tasks.find({logName : newStr}).select('name taskS -_id').then(docs =>{
+			global.tasks = docs.map(taskS => taskS.taskS);
+			
+		})
+		User.find({role :'user'}).select('name username -_id').then(users => {
+			const usernames = users.map(user => user.username);
+			console.log(usernames); // checking the usernames here
+		    console.log(global.tasks);
+			res.render("ToDo.ejs", {UserList : usernames, name : newStr, AllTasks : global.tasks});
+		}).catch(err => {
+			// Handle error here
+			console.error(err);
+		});
+	
 	}else{
 		res.redirect("/Login");
 	}
+	
+})
+
+
+ app.post("/ToDo", (req,res) =>{
+	const name = req.session.name;
+	console.log(name);
+	const giventask = new tasks({
+		logName : name,
+ 		username: req.body.usersList,
+ 		taskS : req.body.tasks
+ 	})
+ 	
+	console.log(giventask)
+	giventask.save();
+	console.log("The given task was saved in the DB");
+	
+
+ 	})
+
+app.get('/ToDoUser', function(req,res,next){
+	const SearchName = req.query.name;
+	const Str = SearchName.slice(1, -1);
+	console.log(Str);
+	tasks.find({username : Str}).select('name taskS -_id').then(docs =>{
+		 let Dtasks = docs.map(taskS => taskS.taskS);
+		console.log(Dtasks);
+		res.render("ToDoUser.ejs",{Display: Dtasks})
+	})
+	
 })
 
 app.get('/logout', function(req, res, next){
@@ -75,6 +130,8 @@ app.post("/login", (req,res)=>{
 		username: req.body.username,
 		password: req.body.password
 	})
+	
+	const Data = JSON.stringify(user.username);
 
 	req.login(user, function(err){
 		if(err){
@@ -82,7 +139,17 @@ app.post("/login", (req,res)=>{
 		} else {
 			console.log("sucessfully logged in")
 			passport.authenticate("local")(req, res, function(){
-				res.redirect("/Todo");
+				User.findOne({username : user.username}).then((doc)=>{
+					
+					console.log(doc.role);
+					if(doc.role === 'manager'){
+						res.redirect(`/ToDo/?name=${Data}`);
+					}
+					else{
+						res.redirect(`/ToDoUser/?name=${Data}`);
+					}
+				})
+				
 		})
 			}
 	})
@@ -100,6 +167,8 @@ app.post("/signUp", (req, res) => {
 	role : req.body.role
 	})
 
+	const Data = JSON.stringify(newUser.username);
+
 	User.register(newUser, req.body.password, function(err,user){
 		if(err){
 			console.log(err);
@@ -107,13 +176,13 @@ app.post("/signUp", (req, res) => {
 		}else{
 			console.log("console: no errors in registering");
 			passport.authenticate("local")(req, res, function(){
-				res.redirect("/Todo");
+
+				res.redirect("/Todo?name=" + Data);
 			});
 		}
 
 	});
 });
-
 
 
 app.listen(port, () => {
