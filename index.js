@@ -87,8 +87,10 @@ app.get("/Todo" , (req , res) =>{
 
 
  app.post("/ToDo", (req,res) =>{
-	const name = req.session.name;
+	let name = req.session.name;
 	console.log(name);
+	let Sname = `'${name}'`
+	console.log(Sname);
 	const giventask = new tasks({
 		logName : name,
  		username: req.body.usersList,
@@ -98,7 +100,7 @@ app.get("/Todo" , (req , res) =>{
 	console.log(giventask)
 	giventask.save();
 	console.log("The given task was saved in the DB");
-	
+	res.redirect(`/ToDo/?name=${Sname}`);
 
  	})
 

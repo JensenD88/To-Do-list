@@ -2,6 +2,11 @@
     margin: 0px
 }
 
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
 .container2{
     height: 350px;
     width: 300px;

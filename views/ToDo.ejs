@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type ="image/x-icon "  href="/images/favicon.ico">
     <title>TaskMinder</title>
 </head>
 <body>
@@ -22,11 +23,21 @@
    </select>
    <br>
     <input type="text" name = "tasks">
-    <button type="submit" name="button">+</button>
+    <button type="submit" id="btnRefresh" name="button">+</button>
     </form>
+
+    <div style="overflow-y: scroll; height:200px; width:400px; border-color: black; border: solid;">
     <% AllTasks.forEach(function (name){ %>
-        <li value ='<%= name%>'><%= name%></li>
+        <input type="checkbox" value ='<%= name%>'><%= name%></input><br>
         <%  }) %>
+    </div>
+        
+    <script>
+       var button = document.getElementById('btnRefresh');
+button.onclick = function() {
+  location.assign('/ToDo');
+}
+    </script>
     
     <%- include("partials/footer.ejs") %> 
 </body>

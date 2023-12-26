@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type ="image/x-icon "  href="/images/favicon.ico">
     <title>TaskMinder</title>
 </head>
 <body>
@@ -11,9 +12,9 @@
     <h1>user Dash Board</h1>
     <h2>Tasks to be done</h2>
     <% Display.forEach(function (name){ %>
-        <li value ='<%= name%>'><%= name%></li>
+        <input type="checkbox" value ='<%= name%>'><%= name%></input><br>
         <%  }) %>
-    
+       
    
     
     
