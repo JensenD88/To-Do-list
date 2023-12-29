@@ -18,7 +18,7 @@ h2 {
 }
 
 .button:hover {
-    background-color:#ffa729;
+    background-color:#8B9FFE;
     color:aliceblue;
 }
 
@@ -40,10 +40,10 @@ img {
     image-rendering: pixelated;
     float: left;
     
-    border-radius: 100px;
-     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 400px;
-    width: 450px;
+    /* border-radius: 100px;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    height: 300px;
+    width: 350px;
 }
 .container> h2{
     color: #0b2d44;

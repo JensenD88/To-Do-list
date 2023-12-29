@@ -9,16 +9,14 @@
 <body>
     <%- include("partials/header.ejs") %> 
 
-    
-   
     <form action="/ToDo" method="post">
-        <h1>Welcome back <%=name%></h1>
+    <h1>Welcome back <%=name%></h1>
     <h2>Manager Dash Board</h2>    
     <label>Choose the User: </label>
     <br>        
    <select name="usersList">
     <% UserList.forEach(function (name){ %>
-        <option value ='<%= name%>'><%= name%></option>
+        <option name = "userAssigned" value ='<%= name%>'><%= name%></option>
         <%  }) %>
    </select>
    <br>
@@ -26,11 +24,14 @@
     <button type="submit" id="btnRefresh" name="button">+</button>
     </form>
 
-    <div style="overflow-y: scroll; height:200px; width:400px; border-color: black; border: solid;">
+   <form action="/MDelete" method="post">
+     <div style="overflow-y: scroll; height:200px; width:400px; border-color: black; border: solid;">
     <% AllTasks.forEach(function (name){ %>
-        <input type="checkbox" value ='<%= name%>'><%= name%></input><br>
+        <input onChange="this.form.submit()" type = "checkbox" name="taskList" value = '<%= name%>' > <%= name%> </input> <br>
         <%  }) %>
     </div>
+</form>
+   
         
     <script>
        var button = document.getElementById('btnRefresh');

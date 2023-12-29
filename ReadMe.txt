@@ -61,3 +61,7 @@ if(req.isAuthenticated()){
 	}else{
 		res.redirect("/Login");
 	}
+	_________________________
+
+	Admin route
+		- 

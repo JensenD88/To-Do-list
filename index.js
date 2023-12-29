@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import session from "express-session";
 import passport from "passport";
 import passportLocalMongoose from "passport-local-mongoose";
-
+import flash from "connect-flash";
 
 
 const port = 3000;
@@ -19,7 +19,8 @@ app.use(session({
   }))
   app.use(passport.initialize());
   app.use(passport.session());
-app.use(bodyParser.json());
+  app.use(bodyParser.json());
+  app.use(flash());
 
 //connecting to mondodb named UserList using mongose ODM
 mongoose.connect("mongodb://localhost:27017/UserList", {
@@ -85,8 +86,8 @@ app.get("/Todo" , (req , res) =>{
 	
 })
 
-
  app.post("/ToDo", (req,res) =>{
+
 	let name = req.session.name;
 	console.log(name);
 	let Sname = `'${name}'`
@@ -97,7 +98,8 @@ app.get("/Todo" , (req , res) =>{
  		taskS : req.body.tasks
  	})
  	
-	console.log(giventask)
+
+	//  console.log("The assigned name type is: " + typeof global.AssifnName)
 	giventask.save();
 	console.log("The given task was saved in the DB");
 	res.redirect(`/ToDo/?name=${Sname}`);
@@ -114,6 +116,43 @@ app.get('/ToDoUser', function(req,res,next){
 		res.render("ToDoUser.ejs",{Display: Dtasks})
 	})
 	
+})
+
+app.post('/UDelete', (req,res)=>{
+	let userTaskDelete = req.body.it;
+	console.log(userTaskDelete);
+	tasks.deleteMany({taskS : userTaskDelete})
+				
+	.then(()=>{
+		console.log("all similar tasks from the Client side was deleted")	
+		let name = req.session.name;
+	console.log(name);
+	let Sname = `'${name}'`;
+	tasks.find({username : Sname}).select('name taskS -_id').then(docs =>{
+		let Dtasks = docs.map(taskS => taskS.taskS);
+	   console.log(Dtasks);
+	   res.render("ToDoUser.ejs",{Display: Dtasks})
+   })
+	}).catch((err=>{
+		console.log("err");
+	}))
+})
+
+
+app.post('/MDelete', (req,res)=>{
+	let userTaskDelete = req.body.taskList;
+	console.log(userTaskDelete);
+	tasks.deleteMany({taskS : userTaskDelete})
+				
+	.then(()=>{
+		console.log("all similar tasks were deleted")	
+		let name = req.session.name;
+	console.log(name);
+	let Sname = `'${name}'`;
+	res.redirect(`/ToDo/?name=${Sname}`);
+	}).catch((err=>{
+		console.log("err");
+	}))
 })
 
 app.get('/logout', function(req, res, next){
@@ -178,8 +217,13 @@ app.post("/signUp", (req, res) => {
 		}else{
 			console.log("console: no errors in registering");
 			passport.authenticate("local")(req, res, function(){
-
-				res.redirect("/Todo?name=" + Data);
+				if(newUser.role === 'manager'){
+					res.redirect("/Todo?name=" + Data); 
+				}else{
+					res.redirect(`/ToDoUser/?name=${Data}`);
+				}
+				
+				
 			});
 		}
 
