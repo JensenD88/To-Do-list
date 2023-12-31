@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesIndex.css">
-    <link rel="icon" type ="image/x-icon "  href="/images/favicon.ico">
+     <link rel="stylesheet" href="/stylesIndex.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type ="image/x-icon "  href="/images/favicon3.ico">
     <title>To-Do</title>
 </head>
 <body>
   
     <%- include("partials/header.ejs") %> 
-    <img src="/images/12297152_4892463.png">
-    <div class="container">
-        <h2>Introducing TaskMinder</h2>
-    <p>Your ultimate productivity companion. Our sleek and user-friendly to-do list product is designed
-    to streamline your daily tasks, making organization effortless. Whether you're managing personal projects or
-    collaborating with a team, TaskMinder is your go-to solution for boosting efficiency and taking control of your busy
-    life. Try TaskMinder today and transform the way you tackle your to-do lists.</p>
-    <a class="button" href="/signUp">Register</a>  
-    </div>
+    <div class="container my-1">
+        <div class="row p-3 pb-0 pe-lg-0 pt-lg-3 align-items-center rounded-3 ">
+          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Introducing TaskMinder</h1>
+            <p class="lead">Your ultimate productivity companion. Our sleek and user-friendly product is designed
+                to streamline your daily tasks effortless. Whether you're managing personal projects or
+                collaborating with a team, TaskMinder is your go-to solution for boosting efficiency and taking control of your Buissnes</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+              <a href="/signUp" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Try Now</a>
+              <!-- <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button> -->
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+              <img class="rounded-lg-3" src="/images/12297152_4892463.jpg" alt="" width="720">
+          </div>
+        </div>
+      </div>
 
    <%- include("partials/footer.ejs") %> 
 </body>

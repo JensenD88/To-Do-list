@@ -65,3 +65,35 @@ if(req.isAuthenticated()){
 
 	Admin route
 		- 
+
+_________________________
+
+<img src="/images/12297152_4892463.png">
+    <div class="container">
+        <h2>Introducing TaskMinder</h2>
+    <p>Your ultimate productivity companion. Our sleek and user-friendly to-do list product is designed
+    to streamline your daily tasks, making organization effortless. Whether you're managing personal projects or
+    collaborating with a team, TaskMinder is your go-to solution for boosting efficiency and taking control of your busy
+    life. Try TaskMinder today and transform the way you tackle your to-do lists.</p>
+    <a class="button" href="/signUp">Register</a>  
+    </div>
+	___________________________________
+
+	 <a href="/">Home</a>
+    <a href="/login">Login</a>
+    <a href="/about">About</a>
+    <a href="/Logout">Logout</a>
+
+	___________________________________
+	<div class="container2">
+            <h1>Login</h1>
+            
+            <form method="post" action="/login"> 
+                <label >Email</label>
+                <input type="text"  name ="username" required>
+                <label >Password</label>
+                <input type="text"  name="password" required>
+                <input type="submit" value="login">
+        
+            </form>
+               <p>Don't have an account <a href="/signUp">Sign up</a></p>

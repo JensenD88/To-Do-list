@@ -4,29 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesLog.css">
-    <link rel="icon" type ="image/x-icon "  href="/images/favicon.ico">
+    
+    <link rel="icon" type ="image/x-icon "  href="/images/favicon3.ico">
     <title>Log-in</title>
 </head>
 <body>
-<div class="box">
+
     <%- include("partials/header.ejs") %> 
-        <div class="container2">
-            <h1>Login</h1>
+        <div class="d-flex ">
+<div class =" align-items-center mx-auto py-4 pt-5" style="width: 250px;">
             
-            <form method="post" action="/login"> 
-                <label >Email</label>
-                <input type="text"  name ="username" required>
-                <label >Password</label>
-                <input type="text"  name="password" required>
-                <input type="submit" value="login">
-        
+
+            <main class="form-signin w-100 m-auto">
+                <form method="post" action="/login"> 
+                <h1 class="h3 mb-3 fw-normal">Login</h1>
+                <div class="form-floating">
+                   <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name ="username" required>
+                   <label for="floatingInput">Email</label> 
+                </div>
+                
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="password" name="password" required>
+                    <label for="floatingPassword">Password</label>
+                </div>
+                 
+               
+                <input class="btn btn-primary w-100 py-2" type="submit" value="login">
+               <p class="mt-5 mb-3 text-body-secondary">Don't have an account <a href="/signUp">Sign up</a></p>
             </form>
-               <p>Don't have an account <a href="/signUp">Sign up</a></p>
+        </main>
+            
+               
             
         </div>
+        </div>
+        
     
     <%- include("partials/footer.ejs") %>
-</div>
+
      
 </body>
 </html>

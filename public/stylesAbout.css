@@ -1,4 +1,4 @@
-img{
+.pic{
     height: 200px;
     width: 200px;
     display: block;
@@ -13,4 +13,7 @@ p{
     font-size: 1.2rem;
     text-wrap: wrap;
     text-align: center;
+}
+body::-webkit-scrollbar {
+    display: none;
 }
