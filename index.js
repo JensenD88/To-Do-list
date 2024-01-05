@@ -66,10 +66,10 @@ app.get("/Todo" , (req , res) =>{
 	console.log(newStr);
 	// let newstr= req.locals.newStr;
 	if(req.isAuthenticated()){
-		 const task = tasks.find({logName : newStr}).select('name taskS -_id').then(docs =>{
-			global.tasks = docs.map(taskS => taskS.taskS);
+		  const task = tasks.find({logName : newStr}).select('name taskS -_id').then(docs =>{
+		global.tasks = docs.map(taskS => taskS.taskS);
 			
-		})
+		 })
 		User.find({role :'user'}).select('name username -_id').then(users => {
 			const usernames = users.map(user => user.username);
 			console.log(usernames); // checking the usernames here
@@ -88,12 +88,12 @@ app.get("/Todo" , (req , res) =>{
 
  app.post("/ToDo", (req,res) =>{
 
-	let name = req.session.name;
-	console.log(name);
-	let Sname = `'${name}'`
+	let Cname = req.session.name;
+	console.log(Cname);
+	let Sname = `'${Cname}'`;
 	console.log(Sname);
 	const giventask = new tasks({
-		logName : name,
+		logName : Cname,
  		username: req.body.usersList,
  		taskS : req.body.tasks
  	})
@@ -106,36 +106,36 @@ app.get("/Todo" , (req , res) =>{
 
  	})
 
-app.get('/ToDoUser', function(req,res,next){
+app.get('/ToDoUser', function(req,res){
 	const SearchName = req.query.name;
+	req.session.Uname = SearchName;
 	const Str = SearchName.slice(1, -1);
-	console.log(Str);
+	console.log("this is User login " + Str);
 	tasks.find({username : Str}).select('name taskS -_id').then(docs =>{
 		 let Dtasks = docs.map(taskS => taskS.taskS);
 		console.log(Dtasks);
-		res.render("ToDoUser.ejs",{Display: Dtasks})
+		res.render("ToDoUser.ejs",{Display: Dtasks , name: Str})
 	})
 	
 })
 
 app.post('/UDelete', (req,res)=>{
+
+	 
+	
 	let userTaskDelete = req.body.it;
 	console.log(userTaskDelete);
-	tasks.deleteMany({taskS : userTaskDelete})
-				
-	.then(()=>{
-		console.log("all similar tasks from the Client side was deleted")	
-		let name = req.session.name;
-	console.log(name);
-	let Sname = `'${name}'`;
-	tasks.find({username : Sname}).select('name taskS -_id').then(docs =>{
-		let Dtasks = docs.map(taskS => taskS.taskS);
-	   console.log(Dtasks);
-	   res.render("ToDoUser.ejs",{Display: Dtasks})
+	
+	tasks.deleteMany({taskS : userTaskDelete}).then(()=>{
+		 let clietName = req.session.Uname;
+		 console.log(clietName);
+		let Sname = `'${clietName}'`;
+		res.redirect(`/ToDoUser/?name=${clietName}`);
    })
-	}).catch((err=>{
-		console.log("err");
-	}))
+	.catch((err)=>{
+		console.log(err);
+	})
+
 })
 
 
@@ -150,9 +150,9 @@ app.post('/MDelete', (req,res)=>{
 	console.log(name);
 	let Sname = `'${name}'`;
 	res.redirect(`/ToDo/?name=${Sname}`);
-	}).catch((err=>{
-		console.log("err");
-	}))
+	}).catch((err)=>{
+		console.log(err);
+	})
 })
 
 app.get('/logout', function(req, res, next){
