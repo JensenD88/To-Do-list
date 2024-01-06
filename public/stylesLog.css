@@ -38,3 +38,6 @@ form{
 .container>p{
     padding-bottom: 5px;
 } */
+body::-webkit-scrollbar {
+    display: none;
+}

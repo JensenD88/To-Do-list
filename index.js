@@ -179,7 +179,7 @@ app.post("/login", (req,res)=>{
 			console.log("login error");
 		} else {
 			console.log("sucessfully logged in")
-			passport.authenticate("local")(req, res, function(){
+			passport.authenticate("local",{ failureRedirect: '/login' })(req, res, function(){
 				User.findOne({username : user.username}).then((doc)=>{
 					
 					console.log(doc.role);

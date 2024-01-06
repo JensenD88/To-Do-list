@@ -20,11 +20,14 @@
             
             <h2 class="lead text-center">Tasks assigned will show below : </h2>
             <br>
-            <div class="TaskDisplay">
+            <div class="row p-5 pb-5 pt-lg-2">
+                <div class="TaskDisplay form-check">
             <% Display.forEach(function (n){ %>
-            <input onChange="this.form.submit()" type="checkbox" name="it" value ='<%= n%>'><%= n%></input><br>
+            <input  onChange="this.form.submit()" type="checkbox" name="it" value ='<%= n%>'>  <%= n%></input><br>
             <%  }) %>
             </div>
+            </div>
+            
             <br>
         </form>
     
