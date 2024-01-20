@@ -7,7 +7,7 @@ import passportLocalMongoose from "passport-local-mongoose";
 import flash from "connect-flash";
 
 
-const port = 3000;
+const port = 80;
 const app = express();
 
 app.use(express.static("public"));
