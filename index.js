@@ -23,7 +23,7 @@ app.use(session({
   app.use(flash());
 
 //connecting to mondodb named UserList using mongose ODM
-mongoose.connect("mongodb://localhost:27017/UserList", {
+mongoose.connect("mongodb+srv://darrenjensen88:Darren123@cluster1.ilezffk.mongodb.net/?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
